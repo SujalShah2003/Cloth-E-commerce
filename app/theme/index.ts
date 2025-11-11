@@ -7,13 +7,14 @@ import {
 import { themeColors } from "./colors";
 
 export const themeOverride: MantineThemeOverride = createTheme({
-  colors: themeColors,
+  colors: {
+    ...DEFAULT_THEME.colors,
+    ...themeColors,
+  },
   primaryColor: "primary",
-  primaryShade: 1,
+  primaryShade: 0,
   cursorType: "pointer",
-  fontFamily: "Source Sans 3, sans-serif",
   black: "#0f2d5c",
-  
 });
 
 export const theme = mergeMantineTheme(DEFAULT_THEME, themeOverride);

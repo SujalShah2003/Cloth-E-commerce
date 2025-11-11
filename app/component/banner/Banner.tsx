@@ -1,5 +1,7 @@
 "use client";
 
+import { quickLink } from "@/app/constants/navigationLinks.temp";
+import { INavigationLink } from "@/app/types/index.type";
 import {
   Badge,
   Box,
@@ -21,8 +23,7 @@ const Banner = () => {
     }
   };
   return (
-    <>
-      <Box w="100%" h='90vh' bg="primary">
+      <Box w="100%" h='80vh' bg="primary">
         <Grid
           gutter={0}
           h="100%"
@@ -33,8 +34,8 @@ const Banner = () => {
             },
           }}
         >
-          <Grid.Col span={{ base: 12, md: 7 }} px='xl' h='100%'>
-            <Stack h="100%" p="lg" mt="md"  justify="center" >
+          <Grid.Col span={{ base: 12, md: 7 }} px="xl" h="100%">
+            <Stack h="100%" p="lg" mt="md" justify="center">
               <Text
                 tt="uppercase"
                 c="primary.7"
@@ -50,13 +51,7 @@ const Banner = () => {
               </Text>
 
               <Group gap="xs" mt="sm">
-                {[
-                  { label: "Hoodies", id: "hoodies" },
-                  { label: "Shirts", id: "shirts" },
-                  { label: "T-Shirts", id: "tshirts" },
-                  { label: "Pants", id: "pants" },
-                  { label: "Shoes", id: "shoes" },
-                ].map((item) => (
+                {quickLink.map((item: INavigationLink) => (
                   <Flex
                     gap={4}
                     align="center"
@@ -81,7 +76,7 @@ const Banner = () => {
               <Button
                 w={150}
                 p="md"
-                mt="xs"
+                mt="md"
                 h="auto"
                 fz="md"
                 fw={600}
@@ -96,7 +91,6 @@ const Banner = () => {
           <Grid.Col span={{ base: 0, md: 5 }} pl={50}></Grid.Col>
         </Grid>
       </Box>
-    </>
   );
 };
 

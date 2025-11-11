@@ -7,14 +7,15 @@ import {
   UnstyledButton,
   Text,
   Avatar,
-  Box,
-  Drawer,
   Burger,
-  Divider,
   Stack,
 } from "@mantine/core";
-import { IconShoppingBag, IconMenu2, IconX } from "@tabler/icons-react";
+import { IconShoppingBag } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
+import { navigationLinks } from "../constants/navigationLinks.temp";
+import { INavigationLink } from "@/app/types/index.type";
+import Link from "next/link";
+import { useCartStore } from "../store/cartStore";
 
 interface MasterLayoutProps {
   children: ReactNode;
@@ -22,6 +23,8 @@ interface MasterLayoutProps {
 
 const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
   const [opened, { toggle }] = useDisclosure();
+  const { cart } = useCartStore();
+  const itemCount = cart.length;
 
   const scrollToSection = useCallback((id: string) => {
     if (typeof window === "undefined") return;
@@ -40,14 +43,6 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
     }
   }, [scrollToSection]);
 
-  const navLinks = [
-    { label: "Hoodies", id: "hoodies" },
-    { label: "Shirts", id: "shirts" },
-    { label: "T-shirts", id: "tshirts" },
-    { label: "Pants", id: "pants" },
-    { label: "Shoes", id: "shoes" },
-  ];
-
   return (
     <>
       <AppShell
@@ -59,7 +54,6 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
         }}
       >
         <AppShell.Header>
-        
           <Group
             h="100%"
             px={50}
@@ -71,26 +65,27 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
             }}
           >
             {/* Left - Logo */}
-            <Text fw={800} fz="xl" tt="uppercase" style={{ cursor: "pointer" }}>
-              ThreadUp
-            </Text>
+            <Link href="/" style={{ cursor: "pointer" }}>
+              <Text fw={800} fz="xl" tt="uppercase">
+                ThreadUp
+              </Text>
+            </Link>
 
             {/* Desktop Nav */}
             <Group visibleFrom="md">
-              {navLinks.map((item) => (
+              {navigationLinks.map((item: INavigationLink) => (
                 <UnstyledButton
-                  key={item.id}
-                  fw={700}
+                  fw={700}  
                   fz={15}
-                  tt='uppercase'
-                  ff='var(--secondary-font)'
+                  mx="md"
+                  tt="uppercase"
                   component="a"
+                  key={item.id}
                   href={`#${item.id}`}
                   onClick={(e) => {
                     e.preventDefault();
                     scrollToSection(item.id);
                   }}
-                  
                 >
                   {item.label}
                 </UnstyledButton>
@@ -99,10 +94,14 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
 
             {/* Right Section */}
             <Group visibleFrom="md">
-              <Group gap={4} style={{ cursor: "pointer" }}>
-                <IconShoppingBag size={20} />
-                <Text fw={600}>0 Items</Text>
-              </Group>
+              <Link href="/checkout">
+                <Group gap={5}>
+                  <IconShoppingBag size={20} />
+                  <Text fw={600}>
+                    {itemCount} {itemCount === 1 ? "Item" : "Items"}
+                  </Text>
+                </Group>
+              </Link>{" "}
               <Avatar
                 color="black"
                 variant="transparent"
@@ -123,16 +122,29 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
 
         {/* Mobile Drawer */}
         <AppShell.Navbar py="md" px={4}>
-          <UnstyledButton w="100%">Home</UnstyledButton>
-          <UnstyledButton w="100%">Blog</UnstyledButton>
-          <UnstyledButton w="100%">Contacts</UnstyledButton>
-          <UnstyledButton w="100%">Support</UnstyledButton>
+          <Stack>
+            {navigationLinks.map((item: INavigationLink) => (
+              <UnstyledButton
+                fw={700}
+                fz={15}
+                mx="md"
+                tt="uppercase"
+                component="a"
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(item.id);
+                }}
+              >
+                {item.label}
+              </UnstyledButton>
+            ))}
+          </Stack>
         </AppShell.Navbar>
 
         {/* Main Content */}
-        <AppShell.Main p={0} >
-          {children}
-        </AppShell.Main>
+        <AppShell.Main p={0}>{children}</AppShell.Main>
       </AppShell>
     </>
   );
