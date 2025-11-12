@@ -11,6 +11,7 @@ import {
   Stack,
 } from "@mantine/core";
 import { IconShoppingBag } from "@tabler/icons-react";
+import Footer from "../component/footer/Footer";
 import { useDisclosure } from "@mantine/hooks";
 import { navigationLinks } from "../constants/navigationLinks.temp";
 import { INavigationLink } from "@/app/types/index.type";
@@ -56,8 +57,9 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
         <AppShell.Header>
           <Group
             h="100%"
-            px={50}
+            px={{ base: 30, md: 50 }}
             align="center"
+            // wrap="nowrap"
             justify="space-between"
             bg="white"
             style={{
@@ -74,26 +76,16 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
             {/* Desktop Nav */}
             <Group visibleFrom="md">
               {navigationLinks.map((item: INavigationLink) => (
-                <UnstyledButton
-                  fw={700}  
-                  fz={15}
-                  mx="md"
-                  tt="uppercase"
-                  component="a"
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(item.id);
-                  }}
-                >
-                  {item.label}
-                </UnstyledButton>
+                <Link href={`${item?.id}`} key={item.id}>
+                  <Text fw={700} fz={15} mx="md" tt="uppercase">
+                    {item.label}
+                  </Text>
+                </Link>
               ))}
             </Group>
 
             {/* Right Section */}
-            <Group visibleFrom="md">
+            <Group>
               <Link href="/checkout">
                 <Group gap={5}>
                   <IconShoppingBag size={20} />
@@ -102,21 +94,24 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
                   </Text>
                 </Group>
               </Link>{" "}
-              <Avatar
-                color="black"
-                variant="transparent"
-                size={40}
-                radius="xl"
-              />
+              <Group>
+                <Avatar
+                  color="black"
+                  variant="transparent"
+                  size={40}
+                  radius="xl"
+                  visibleFrom="md"
+                />
+                <Burger
+                  opened={opened}
+                  onClick={toggle}
+                  hiddenFrom="md"
+                  size="sm"
+                />
+              </Group>
             </Group>
 
             {/* Mobile Burger Menu */}
-            <Burger
-              opened={opened}
-              onClick={toggle}
-              hiddenFrom="md"
-              size="sm"
-            />
           </Group>
         </AppShell.Header>
 
@@ -124,28 +119,21 @@ const MasterLayout: React.FC<MasterLayoutProps> = ({ children }) => {
         <AppShell.Navbar py="md" px={4}>
           <Stack>
             {navigationLinks.map((item: INavigationLink) => (
-              <UnstyledButton
-                fw={700}
-                fz={15}
-                mx="md"
-                tt="uppercase"
-                component="a"
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(item.id);
-                }}
-              >
-                {item.label}
-              </UnstyledButton>
+              <Link href={`${item?.id}`} key={item.id} onClick={() => toggle()}>
+                <Text fw={700} fz={15} mx="md" tt="uppercase">
+                  {item.label}
+                </Text>
+              </Link>
             ))}
           </Stack>
         </AppShell.Navbar>
 
         {/* Main Content */}
-        <AppShell.Main p={0}>{children}</AppShell.Main>
+        <AppShell.Main p={0} mt={100}>
+          {children}
+        </AppShell.Main>
       </AppShell>
+      <Footer />
     </>
   );
 };

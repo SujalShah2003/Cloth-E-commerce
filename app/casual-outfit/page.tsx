@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { casualOutfits } from "@/app/constants/casualOutfit.temp";
 import { useCartStore } from "@/app/store/cartStore";
 import { ICasualOutfit } from "@/app/types/index.type";
@@ -8,6 +9,7 @@ import {
   Box,
   Button,
   Card,
+  Flex,
   Grid,
   Group,
   Stack,
@@ -16,30 +18,35 @@ import {
 import { IconShoppingCartShare } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import TitleHeader from "../common/TitleHeader";
 
 const CasualOutfitList = () => {
   const { addToCart, isInCart } = useCartStore();
+  const router = useRouter();
 
   return (
     <>
-      <Box p={50} pt={130} bg="primary">
-        <Text fz="h2" fw={700} ta="center">
-          Casual Outfit Collections
-        </Text>
-        <Text c="dimmed" fz="md" ta="center" mt={5}>
-          Discover our curated selection of casual outfits perfect for any
-          occasion.
-        </Text>
+      <Box p={{ base: 30, md: 50 }} pt={30} bg="primary">
+        <TitleHeader />
       </Box>
-     
-      <Grid gutter="xl"  p={50}>
+
+      <Grid gutter="xl" p={{ base: 30, md: 50 }}>
         {casualOutfits.map((item: ICasualOutfit) => {
           const inCart = isInCart(item.id);
 
           return (
             <Grid.Col key={item.id} span={{ base: 12, sm: 6, md: 3 }}>
-              <Card shadow="md" radius="lg" withBorder p="md" h={500}>
+              <Card
+                shadow="md"
+                radius="lg"
+                withBorder
+                p="md"
+                h={500}
+                style={{ cursor: "pointer" }}
+                onClick={() => router.push(`/casual-outfit/${item.id}`)}
+              >
                 <Box
                   style={{
                     position: "relative",
@@ -88,31 +95,32 @@ const CasualOutfitList = () => {
                   </Group>
                 </Stack>
 
-                <Group mt="md" justify="space-between">
+                <Flex gap="md" mt="md" justify="space-between">
                   <Button
                     variant="outline"
                     size="sm"
                     color="black"
                     component={Link}
-                    href={`/outfits/${item.id}`}
-                    style={{ flex: 1 }}
+                    w="100%"
+                    href={`/casual-outfit/${item.id}`}
                   >
                     View Details
                   </Button>
                   {!inCart && (
                     <ActionIcon
+                      w="100%"
                       size="lg"
                       color="black"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         addToCart(item);
                         toast.success(`${item.title} added to cart!`);
                       }}
-                      title="Add to Cart"
                     >
                       <IconShoppingCartShare />
                     </ActionIcon>
                   )}
-                </Group>
+                </Flex>
               </Card>
             </Grid.Col>
           );

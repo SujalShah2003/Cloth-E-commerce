@@ -18,7 +18,7 @@ const iconMap: Record<string, JSX.Element> = {
 
 const ProvidingServices = () => {
   return (
-    <Box p={50} py={70}>
+    <Box p={{base:30,md:50}} py={70}>
       <SimpleGrid
         cols={{ base: 1, sm: 2, md: 4 }}
         spacing="lg"

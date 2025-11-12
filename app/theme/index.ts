@@ -1,16 +1,13 @@
 import {
   createTheme,
   DEFAULT_THEME,
-  type MantineThemeOverride,
+  MantineThemeOverride,
   mergeMantineTheme,
 } from "@mantine/core";
 import { themeColors } from "./colors";
 
 export const themeOverride: MantineThemeOverride = createTheme({
-  colors: {
-    ...DEFAULT_THEME.colors,
-    ...themeColors,
-  },
+  colors: themeColors,
   primaryColor: "primary",
   primaryShade: 0,
   cursorType: "pointer",

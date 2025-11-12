@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import '@mantine/core/styles.css';
+import "@mantine/core/styles.css";
 
 import MasterLayout from "./layout/MasterLayout";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
-
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "ThreadUp",
@@ -22,7 +22,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <MantineProvider theme={theme}>
-          <MasterLayout>{children}</MasterLayout>
+          <MasterLayout>
+            <Toaster richColors position="bottom-right" />
+            {children}
+          </MasterLayout>
         </MantineProvider>
       </body>
     </html>

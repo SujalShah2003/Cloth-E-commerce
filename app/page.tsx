@@ -7,8 +7,6 @@ import { Toaster } from "sonner";
 const App = () => {
   return (
     <>
-      <Toaster richColors position="bottom-left" />
-
       <Box id="home">
         <Banner />
       </Box>
@@ -21,11 +19,6 @@ const App = () => {
         <CasualOutfit />
       </Box>
 
-      <Box id="formal-outfit" h="100vh" p="xl">
-        <Text fw={700} fz="xl">
-          T-Shirts Collection
-        </Text>
-      </Box>
     </>
   );
 };
