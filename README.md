@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cloth E commerce
+
+Cloth E commerce is a Next.js (app-router) storefront demo built with Mantine UI and Zustand for state management. It demonstrates product listing, detail views, a simple cart, and an enquiry/checkout form.
 
 ## Getting Started
 
